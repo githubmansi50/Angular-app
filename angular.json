@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "EncryptTest"
+    }
+  },
+  "defaultProject": "EncryptTest",
+  "cli": {
+    "analytics": "51a51ae3-4d96-4376-926f-eb2b188f6dc4"
+  }
 }

@@ -1,13 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-asymmetric',
+  templateUrl: './asymmetric.component.html',
+  styleUrls: ['./asymmetric.component.css']
 })
-export class AppComponent {
-  title = 'EncryptTest';
+export class AsymmetricComponent implements OnInit {
   encryptMode: boolean;
   textToConvert: string;
   password: string;
@@ -53,4 +52,8 @@ export class AppComponent {
       }
     }
   }
+
+  ngOnInit(): void {
+  }
+
 }
