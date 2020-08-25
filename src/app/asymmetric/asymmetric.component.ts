@@ -12,16 +12,20 @@ export class AsymmetricComponent implements OnInit {
   password: string;
   conversionOutput: string;
  
-  form = new FormGroup({
-    website: new FormControl('', Validators.required)
+  Dataform = new FormGroup({
+    Pass:new FormControl(''),
+    Text: new FormControl(''),
+    Mode: new FormControl('', Validators.required),
+    Alg:new FormControl('')
   });
+
   
   get f(){
-    return this.form.controls;
+    return this.Dataform.controls;
   }
   
   submit(){
-    console.log(this.form.value);
+    console.log(this.Dataform.value);
   }
   constructor() {
     this.encryptMode = true;
@@ -41,7 +45,7 @@ export class AsymmetricComponent implements OnInit {
   }
 
   convertText() {
-    if (this.textToConvert.trim() === "" || this.password.trim() === "") {
+    /*if (this.textToConvert.trim() === "" || this.password.trim() === "") {
       this.conversionOutput = "Please fill the textboxes."
       return;
     }
@@ -52,6 +56,7 @@ export class AsymmetricComponent implements OnInit {
       }
     }
   }
+*/}
 
   ngOnInit(): void {
   }
