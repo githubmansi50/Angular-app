@@ -296,9 +296,9 @@
     <form class="container" [formGroup]="AsymDataform">  
       <div class ="form-group">
       <label for="website">Choose Your Option:</label>
-        <select formControlName="Mode" class="form-control"  onchange="updatevalue(this.value)">
-          <option value="1">Encryption</option>
-          <option value="2">Decryption</option>
+        <select formControlName="Mode" class="form-control" (click)="changeMode()">
+          <option>Encryption</option>
+          <option>Decryption</option>
         </select>
       </div>
         <!--

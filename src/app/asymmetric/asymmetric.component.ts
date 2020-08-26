@@ -39,8 +39,8 @@ export class AsymmetricComponent implements OnInit {
   }
 
   changeMode() {
-    //this.encryptMode = this.encryptMode ? false : true;
-    //this.encryptMode = this.encryptMode ? true : false;
+    this.encryptMode = this.encryptMode ? false : true;
+    this.encryptMode = this.encryptMode ? true : false;
 
     this.textToConvert = "";
   }
@@ -64,17 +64,9 @@ export class AsymmetricComponent implements OnInit {
     this.encryptMode = this.encryptMode;
     this.textToConvert = "";
   }
-  updatevalue(value){
-    if(value==1){
-      this.encryptMode=true;
-    }else{
-      this.encryptMode=false;
-    }
-  }
   convertText() {
     this.isShown = ! this.isShown;
     this.publiKeyLabel=true;
-    this.encryptMode=false;
 
     interface Result{
       Output_String:string;
