@@ -1,19 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 
+
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'app-symmetric',
+  templateUrl: './symmetric.component.html',
+  styleUrls: ['./symmetric.component.css']
 })
-export class AppComponent {
-  title = 'Symmetric/Asymmetric';
+export class SymmetricComponent implements OnInit {
+  title = 'Symmetric Encryption';
   encryptMode: boolean;
   textToConvert: string;
   password: string;
   conversionOutput: string;
-  postData;
   url='http://localhost:8080/EncryptDecrypt/webapi/JsonTest';
 
  
@@ -71,5 +71,7 @@ export class AppComponent {
       }
     }
   }*/
-}
+}  ngOnInit(): void {
+  }
+
 }

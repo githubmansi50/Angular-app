@@ -7,11 +7,13 @@ import {HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AsymmetricComponent } from "./asymmetric/asymmetric.component";
+import { SymmetricComponent } from './symmetric/symmetric.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AsymmetricComponent
+    AsymmetricComponent,
+    SymmetricComponent
   ],
   imports: [
     BrowserModule,
@@ -21,6 +23,7 @@ import { AsymmetricComponent } from "./asymmetric/asymmetric.component";
     HttpClientModule
   ],
   providers: [],
-  bootstrap: [AppComponent, AsymmetricComponent]
+  bootstrap: [AppComponent, AsymmetricComponent,SymmetricComponent]
+  
 })
 export class AppModule { }

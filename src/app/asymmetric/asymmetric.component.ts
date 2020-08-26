@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms'
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-asymmetric',
@@ -7,56 +8,83 @@ import { FormGroup, FormControl, Validators } from '@angular/forms'
   styleUrls: ['./asymmetric.component.css']
 })
 export class AsymmetricComponent implements OnInit {
+  title = 'Asymmetric Encryption';
   encryptMode: boolean;
+  publiKeyLabel:boolean;
   textToConvert: string;
   password: string;
   conversionOutput: string;
+  conversionOutput2: string;
+  isShown:boolean = true;
+  url='http://localhost:8080/EncryptDecrypt/webapi/AsymmetricString';
+
  
-  Dataform = new FormGroup({
+  AsymDataform = new FormGroup({
     Pass:new FormControl(''),
     Text: new FormControl(''),
-    Mode: new FormControl('', Validators.required),
-    Alg:new FormControl('')
+    Mode: new FormControl('', Validators.required)
   });
 
   
   get f(){
-    return this.Dataform.controls;
+    return this.AsymDataform.controls;
   }
   
   submit(){
-    console.log(this.Dataform.value);
+    console.log(this.AsymDataform.value);
   }
-  constructor() {
+  constructor(private http:HttpClient) {
     this.encryptMode = true;
+    this.publiKeyLabel= false;
   }
 
   changeMode() {
-    this.encryptMode = this.encryptMode ? false : true;
-    this.encryptMode = this.encryptMode ? true : false;
+    //this.encryptMode = this.encryptMode ? false : true;
+    //this.encryptMode = this.encryptMode ? true : false;
 
     this.textToConvert = "";
   }
+  generateKeys(){
+    this.publiKeyLabel=false;
+    this.isShown=true;
+    interface keys{
+      Public_key:string,
+      Private_key:string
+    }
+    this.http.get<keys>(this.url).subscribe(response =>{
+      this.conversionOutput=response.Public_key;
+      this.conversionOutput2=response.Private_key;
+      console.log(response.Public_key);
+      console.log(response.Private_key);
 
+    });
+  }
 
   changeAlgo() {
     this.encryptMode = this.encryptMode;
     this.textToConvert = "";
   }
-
-  convertText() {
-    /*if (this.textToConvert.trim() === "" || this.password.trim() === "") {
-      this.conversionOutput = "Please fill the textboxes."
-      return;
-    }
-    else {
-      if (this.encryptMode) {
-      }
-      else {
-      }
+  updatevalue(value){
+    if(value==1){
+      this.encryptMode=true;
+    }else{
+      this.encryptMode=false;
     }
   }
-*/}
+  convertText() {
+    this.isShown = ! this.isShown;
+    this.publiKeyLabel=true;
+    this.encryptMode=false;
+
+    interface Result{
+      Output_String:string;
+    }
+    console.log(this.AsymDataform.value);
+    this.http.post<Result>(this.url,this.AsymDataform.value).subscribe(response =>{
+      this.conversionOutput=response.Output_String;
+      console.log(response);
+    });
+    }
 
   ngOnInit(): void {
   }
