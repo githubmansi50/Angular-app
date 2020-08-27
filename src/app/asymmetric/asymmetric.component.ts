@@ -9,10 +9,9 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AsymmetricComponent implements OnInit {
   title = 'Asymmetric Encryption';
-  encryptMode: boolean;
+  encryptMode: boolean=true;
   publiKeyLabel:boolean;
-  textToConvert: string;
-  password: string;
+  Modevalidator:string;
   conversionOutput: string;
   conversionOutput2: string;
   isShown:boolean = true;
@@ -34,15 +33,17 @@ export class AsymmetricComponent implements OnInit {
     console.log(this.AsymDataform.value);
   }
   constructor(private http:HttpClient) {
-    this.encryptMode = true;
     this.publiKeyLabel= false;
   }
 
   changeMode() {
-    this.encryptMode = this.encryptMode ? false : true;
-    this.encryptMode = this.encryptMode ? true : false;
+    this.Modevalidator=this.AsymDataform.get("Mode").value;
+     if(this.Modevalidator=="Encryption"){
+       this.encryptMode=true;
+       console.log(this.encryptMode);
+     }
+     else{this.encryptMode=false;}
 
-    this.textToConvert = "";
   }
   generateKeys(){
     this.publiKeyLabel=false;
@@ -62,7 +63,6 @@ export class AsymmetricComponent implements OnInit {
 
   changeAlgo() {
     this.encryptMode = this.encryptMode;
-    this.textToConvert = "";
   }
   convertText() {
     this.isShown = ! this.isShown;
@@ -72,11 +72,25 @@ export class AsymmetricComponent implements OnInit {
       Output_String:string;
     }
     console.log(this.AsymDataform.value);
-    this.http.post<Result>(this.url,this.AsymDataform.value).subscribe(response =>{
-      this.conversionOutput=response.Output_String;
-      console.log(response);
-    });
+    
+    
+
+      
+  if (this.AsymDataform.get("Text").value.trim() === "" || this.AsymDataform.get("Pass").value.trim() === "") {
+    this.conversionOutput = "Please fill the textboxes."
+    return;
+  }
+  else {
+      this.http.post<Result>(this.url,this.AsymDataform.value).subscribe(response =>{
+        this.conversionOutput=response.Output_String;
+        console.log(response);
+      },(error) =>{
+        this.conversionOutput="Error occurred:Please check your connection";
+      });
     }
+   
+  }
+
 
   ngOnInit(): void {
   }

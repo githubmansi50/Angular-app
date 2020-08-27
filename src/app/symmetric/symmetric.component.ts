@@ -11,6 +11,7 @@ import {HttpClient} from '@angular/common/http';
 export class SymmetricComponent implements OnInit {
   title = 'Symmetric Encryption';
   encryptMode: boolean;
+  Modevalidator:string;
   textToConvert: string;
   password: string;
   conversionOutput: string;
@@ -32,14 +33,18 @@ export class SymmetricComponent implements OnInit {
     console.log(this.Dataform.value);
   }
   constructor(private http:HttpClient) {
+    this.Dataform.get("Mode").setValue("Encryption");
+    this.Dataform.get("Alg").setValue("AES-256");
     this.encryptMode = true;
   }
 
   changeMode() {
-    this.encryptMode = this.encryptMode ? false : true;
-    this.encryptMode = this.encryptMode ? true : false;
-
-    this.textToConvert = "";
+    this.Modevalidator=this.Dataform.get("Mode").value;
+     if(this.Modevalidator=="Encryption"){
+       this.encryptMode=true;
+       console.log(this.encryptMode);
+     }
+     else{this.encryptMode=false;}
   }
 
 
@@ -55,22 +60,19 @@ export class SymmetricComponent implements OnInit {
     console.log(this.Dataform.value);
   
 
-    this.http.post<Result>(this.url,this.Dataform.value).subscribe(response =>{
-      this.conversionOutput=response.Output_String;
-      console.log(response);
-    });
-  /* if (this.textToConvert.trim() === "" || this.password.trim() === "") {
+    
+  if (this.Dataform.get("Text").value.trim() === "" || this.Dataform.get("Pass").value.trim() === "") {
       this.conversionOutput = "Please fill the textboxes."
       return;
     }
     else {
-      if (this.encryptMode) {
-
+        this.http.post<Result>(this.url,this.Dataform.value).subscribe(response =>{
+          this.conversionOutput=response.Output_String;
+          console.log(response);
+        },(error) =>{
+          this.conversionOutput="Error occurred:Please check your connection";
+        });
       }
-      else {
-      }
-    }
-  }*/
 }  ngOnInit(): void {
   }
 
